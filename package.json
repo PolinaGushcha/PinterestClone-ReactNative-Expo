@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "pinterest-app",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -25,7 +25,8 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-pager-view": "6.2.0",
     "react-native-tab-view": "^3.5.2",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "expo-updates": "~0.18.19"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Image, Pressable, Text, Modal, View } from "react-native";
-import { globalStyles } from "../../styles";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import { ModalImgInfo } from "../../pages/modal";
-import { useDataContext } from "../../contexts/DataContextProvider";
-import { IRenderItem } from "../../types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState, useEffect } from 'react';
+import { Image, Pressable, Text, Modal, View } from 'react-native';
+import { globalStyles } from '../../styles';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { ModalImgInfo } from '../../pages/modal';
+import { useDataContext } from '../../contexts/DataContextProvider';
+import { IRenderItem } from '../../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const RenderItem: React.FC<IRenderItem> = ({ item }) => {
+export const RenderItem: React.FC<IRenderItem> = ({ item, renderHeight }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { userSavedImg, setUserSavedImg } = useDataContext();
 
   async function setAsyncStorageData() {
     try {
-      await AsyncStorage.setItem("userImgData", JSON.stringify(userSavedImg));
+      await AsyncStorage.setItem('userImgData', JSON.stringify(userSavedImg));
     } catch (error) {
       console.log(error);
     }
   }
   async function getAsyncStorageData() {
     try {
-      const userGetData = await AsyncStorage.getItem("userImgData");
+      const userGetData = await AsyncStorage.getItem('userImgData');
       if (userGetData !== null) {
-        JSON.parse(userGetData).length > 1
-          ? setUserSavedImg(JSON.parse(userGetData))
-          : JSON.parse(userGetData);
+        setUserSavedImg(JSON.parse(userGetData));
       } else {
-        console.log("you have no data");
+        console.log('you have no data');
       }
     } catch (error) {
       console.log(error);
@@ -46,6 +44,8 @@ export const RenderItem: React.FC<IRenderItem> = ({ item }) => {
           authorsName: item.item.user.name,
           views: item.item.views,
           downloads: item.item.downloads,
+          width: item.item.width,
+          height: item.item.height,
         },
       ]);
   };
@@ -76,18 +76,23 @@ export const RenderItem: React.FC<IRenderItem> = ({ item }) => {
       >
         <Pressable onPress={isImgLiked} style={globalStyles.like}>
           {userSavedImg.find((obj) => obj.id === item.item.id) ? (
-            <FontAwesome name="heart" size={24} color="red" />
+            <FontAwesome name="heart" size={18} color="#E60023" />
           ) : (
-            <FontAwesome name="heart-o" size={24} color="white" />
+            <FontAwesome name="heart-o" size={18} color="#211922" />
           )}
         </Pressable>
         <Image
-          style={globalStyles.pin}
+          style={[
+            globalStyles.pin,
+            renderHeight ? { height: renderHeight } : null,
+          ]}
           source={{ uri: item.item.urls.regular }}
         />
-        <Text style={globalStyles.alt_description}>
-          {item.item.alt_description}
-        </Text>
+        {!!item.item.alt_description && (
+          <Text style={globalStyles.alt_description} numberOfLines={2}>
+            {item.item.alt_description}
+          </Text>
+        )}
       </Pressable>
     </View>
   );

@@ -1,26 +1,49 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { ISearchContextInterface, IContextProps } from "../types";
-import { fetchData, fetchSearchQueryData } from "../services/api";
+import { createContext, useContext, useState, useEffect } from 'react';
+import { ISearchContextInterface, IContextProps } from '../types';
+import { fetchData, fetchSearchQueryData } from '../services/api';
 
-const SearchContext = createContext<ISearchContextInterface>({} as ISearchContextInterface);
+const SearchContext = createContext<ISearchContextInterface>(
+  {} as ISearchContextInterface,
+);
 
-const SearchContextProvider = ({ children }: IContextProps) => { 
-  const [userSearchQuery, setUserSearchQuery] = useState(''); //параметр поиска пустой или с запросом
-  const [images, setImages] = useState<any[]>([]); //данные с нужными картинками
-  const [currentPage, setCurrentPage] = useState(1); //состояние прокрутнки страницы
+const dedupeById = (images: any[]) => {
+  const seen = new Set<string>();
+  return images.filter((image) => {
+    if (seen.has(image.id)) return false;
+    seen.add(image.id);
+    return true;
+  });
+};
+
+const SearchContextProvider = ({ children }: IContextProps) => {
+  const [userSearchQuery, setUserSearchQuery] = useState('');
+  const [images, setImages] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
-    if(userSearchQuery == '') {
-      fetchData().then(data => setImages([...data]));
+    setCurrentPage(1);
+    if (userSearchQuery == '') {
+      fetchData().then((data) => setImages(dedupeById(data)));
     } else {
-      fetchSearchQueryData(userSearchQuery).then(data => setImages([...data.results]));
+      fetchSearchQueryData(userSearchQuery, 1).then((data) =>
+        setImages(dedupeById(data.results)),
+      );
     }
   }, [userSearchQuery]);
   useEffect(() => {
-    if(userSearchQuery === '') {
-      fetchData().then(data => setImages([...images, ...data]));
+    if (currentPage === 1) return;
+    setIsLoadingMore(true);
+    if (userSearchQuery === '') {
+      fetchData()
+        .then((data) => setImages((prev) => dedupeById([...prev, ...data])))
+        .finally(() => setIsLoadingMore(false));
     } else if (userSearchQuery !== '') {
-      fetchSearchQueryData(userSearchQuery).then(data => setImages([...images, ...data.results]))
+      fetchSearchQueryData(userSearchQuery, currentPage)
+        .then((data) =>
+          setImages((prev) => dedupeById([...prev, ...data.results])),
+        )
+        .finally(() => setIsLoadingMore(false));
     }
   }, [currentPage]);
 
@@ -31,10 +54,13 @@ const SearchContextProvider = ({ children }: IContextProps) => {
     setImages: setImages,
     currentPage: currentPage,
     setCurrentPage: setCurrentPage,
+    isLoadingMore: isLoadingMore,
   };
 
   return (
-    <SearchContext.Provider value={contextValue}>{children}</SearchContext.Provider>
+    <SearchContext.Provider value={contextValue}>
+      {children}
+    </SearchContext.Provider>
   );
 };
 

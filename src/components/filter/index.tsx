@@ -13,12 +13,13 @@ export function FilterItem() {
       <FontAwesome
         style={!loop ? globalStyles.search : { display: "none" }}
         name="search"
-        size={24}
-        color="#bfbfbf"
+        size={18}
+        color="#8E8E93"
       />
       <TextInput
         style={globalStyles.filter}
         placeholder="Search"
+        placeholderTextColor="#8E8E93"
         onFocus={() => setLoop(true)}
         onBlur={(el) => {
           setLoop(false);

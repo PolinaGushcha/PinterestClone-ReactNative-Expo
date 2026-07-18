@@ -14,9 +14,9 @@ export const NavigationMenu: React.FC = () => {
         tabBarIcon: ({ focused }) => {
           if (route.name === "Main") {
             return focused ? (
-              <Ionicons name="md-home" size={26} color={colors.text} />
+              <Ionicons name="home" size={26} color={colors.text} />
             ) : (
-              <Ionicons name="md-home-outline" size={26} color={colors.textMuted} />
+              <Ionicons name="home-outline" size={26} color={colors.textMuted} />
             );
           } else if (route.name === "Profile") {
             return focused ? (

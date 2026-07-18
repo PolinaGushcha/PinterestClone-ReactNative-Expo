@@ -61,7 +61,7 @@ export const RenderItem: React.FC<IRenderItem> = ({ item, renderHeight }) => {
     <View>
       <Modal visible={isModalOpen}>
         <AntDesign
-          name="closecircleo"
+          name="close-circle"
           size={25}
           color="white"
           onPress={() => setIsModalOpen(false)}

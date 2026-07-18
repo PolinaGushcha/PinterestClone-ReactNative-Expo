@@ -7,6 +7,7 @@ import { useSearchContext } from "../../contexts/SearchContextProvider";
 export function FilterItem() {
   const { setUserSearchQuery } = useSearchContext();
   const [loop, setLoop] = useState(false);
+  const [text, setText] = useState("");
 
   return (
     <View style={globalStyles.filter_container}>
@@ -20,12 +21,13 @@ export function FilterItem() {
         style={globalStyles.filter}
         placeholder="Search"
         placeholderTextColor="#8E8E93"
+        onChangeText={setText}
         onFocus={() => setLoop(true)}
-        onBlur={(el) => {
+        onBlur={() => {
           setLoop(false);
-          setUserSearchQuery({ el }.el.nativeEvent.text);
+          setUserSearchQuery(text);
         }}
-        onSubmitEditing={(el) => setUserSearchQuery({ el }.el.nativeEvent.text)}
+        onSubmitEditing={(el) => setUserSearchQuery(el.nativeEvent.text)}
       />
     </View>
   );

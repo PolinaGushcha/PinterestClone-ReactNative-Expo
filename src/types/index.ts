@@ -11,6 +11,8 @@ export type IProfileDataObject = {
   authorsName: string;
   views: number;
   downloads: number;
+  width: number;
+  height: number;
 };
 export interface IUserContextInterface {
   userSavedImg: IProfileDataObject[];
@@ -20,14 +22,16 @@ export interface IUserContextInterface {
 export interface ISearchContextInterface {
   userSearchQuery: string;
   setUserSearchQuery: Dispatch<SetStateAction<string>>;
-  images: any;
-  setImages: Dispatch<SetStateAction<any>>;
+  images: any[];
+  setImages: Dispatch<SetStateAction<any[]>>;
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
+  isLoadingMore: boolean;
 }
 
 export interface IRenderItem {
   item: any;
+  renderHeight?: number;
 }
 
 export interface IModalImgInfo {

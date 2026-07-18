@@ -4,7 +4,7 @@ import { IProfileDataObject, IUserContextInterface, IContextProps } from "../typ
 const DataContext = createContext<IUserContextInterface>({} as IUserContextInterface);
 
 const DataContextProvider = ({ children }: IContextProps) => { 
-  const [userSavedImg, setUserSavedImg] = useState<IProfileDataObject[]>([{ id: '', alt_description: '', url: '', authorsName: '', views: 0, downloads: 0 }]);  
+  const [userSavedImg, setUserSavedImg] = useState<IProfileDataObject[]>([]);
   
   const contextValue: IUserContextInterface = {
     userSavedImg: userSavedImg,

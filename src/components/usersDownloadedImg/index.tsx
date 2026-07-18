@@ -1,5 +1,5 @@
 import { Pressable, Text, View, Image, ScrollView } from "react-native";
-import { globalStyles } from "../../styles";
+import { globalStyles, colors, spacing, shadow } from "../../styles";
 import * as ImagePicker from "expo-image-picker";
 import { useState, useEffect } from "react";
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
@@ -61,6 +61,13 @@ export const UsersDownloadedImg = () => {
       >
         <AntDesign name="plus" size={24} color="black" />
       </Pressable>
+      {image && image.length === 0 && (
+        <View style={{ alignItems: "center", paddingTop: spacing.xl }}>
+          <Text style={{ color: colors.textMuted, textAlign: "center" }}>
+            Tap + to add your own pins
+          </Text>
+        </View>
+      )}
       <ScrollView>
         <View
           style={{
@@ -72,12 +79,20 @@ export const UsersDownloadedImg = () => {
         >
           {image &&
             image.map((str) => (
-              <View key={Crypto.randomUUID()}>
+              <View
+                key={Crypto.randomUUID()}
+                style={{
+                  borderRadius: 16,
+                  marginBottom: spacing.md,
+                  position: "relative",
+                  ...shadow.card,
+                }}
+              >
                 <Pressable
                   onPress={() => setImage(image.filter((el) => el !== str))}
                   style={globalStyles.like}
                 >
-                  <FontAwesome5 name="trash" size={24} color="black" />
+                  <FontAwesome5 name="trash" size={16} color={colors.red} />
                 </Pressable>
                 <Image
                   source={{ uri: str }}

@@ -6,7 +6,7 @@ import SearchContextProvider from "../../contexts/SearchContextProvider";
 
 export const Main: React.FC = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
       <SearchContextProvider>
           <PinterestLayout />
       </SearchContextProvider>

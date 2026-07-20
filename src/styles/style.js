@@ -15,6 +15,7 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     margin: 0,
     padding: 0,
+    backgroundColor: colors.background,
   },
   masonryRow: {
     flexDirection: 'row',
@@ -39,9 +40,9 @@ export const globalStyles = StyleSheet.create({
   pin_container: {
     position: 'relative',
     marginBottom: spacing.md,
+    marginHorizontal: spacing.xs,
     backgroundColor: colors.surface,
     overflow: 'hidden',
-    ...shadow.card,
   },
   like: {
     position: 'absolute',

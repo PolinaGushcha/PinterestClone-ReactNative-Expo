@@ -1,24 +1,30 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { Main, Profile } from "../../pages";
-import { colors, shadow } from "../../styles";
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Main, Profile } from '../../pages';
+import { colors, shadow } from '../../styles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
 export const NavigationMenu: React.FC = () => {
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
-      initialRouteName={"Main"}
+      initialRouteName={'Main'}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          if (route.name === "Main") {
+          if (route.name === 'Main') {
             return focused ? (
               <Ionicons name="home" size={26} color={colors.text} />
             ) : (
-              <Ionicons name="home-outline" size={26} color={colors.textMuted} />
+              <Ionicons
+                name="home-outline"
+                size={26}
+                color={colors.textMuted}
+              />
             );
-          } else if (route.name === "Profile") {
+          } else if (route.name === 'Profile') {
             return focused ? (
               <FontAwesome name="user" size={24} color={colors.text} />
             ) : (
@@ -30,7 +36,7 @@ export const NavigationMenu: React.FC = () => {
         tabBarActiveTintColor: colors.text,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          height: 80,
+          height: 80 + insets.bottom,
           paddingBottom: 17,
           paddingTop: 15,
           backgroundColor: colors.background,
@@ -39,8 +45,8 @@ export const NavigationMenu: React.FC = () => {
         },
       })}
     >
-      <Tab.Screen name={"Main"}>{() => <Main />}</Tab.Screen>
-      <Tab.Screen name={"Profile"}>{() => <Profile />}</Tab.Screen>
+      <Tab.Screen name={'Main'}>{() => <Main />}</Tab.Screen>
+      <Tab.Screen name={'Profile'}>{() => <Profile />}</Tab.Screen>
     </Tab.Navigator>
   );
 };

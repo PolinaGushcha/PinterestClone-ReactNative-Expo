@@ -1,35 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Pressable, Text, Modal, View } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, Text, Modal, View } from 'react-native';
+import { Image } from 'expo-image';
 import { globalStyles } from '../../styles';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { ModalImgInfo } from '../../pages/modal';
 import { useDataContext } from '../../contexts/DataContextProvider';
 import { IRenderItem } from '../../types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const RenderItem: React.FC<IRenderItem> = ({ item, renderHeight }) => {
+const RenderItemComponent: React.FC<IRenderItem> = ({ item, renderHeight }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { userSavedImg, setUserSavedImg } = useDataContext();
-
-  async function setAsyncStorageData() {
-    try {
-      await AsyncStorage.setItem('userImgData', JSON.stringify(userSavedImg));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async function getAsyncStorageData() {
-    try {
-      const userGetData = await AsyncStorage.getItem('userImgData');
-      if (userGetData !== null) {
-        setUserSavedImg(JSON.parse(userGetData));
-      } else {
-        console.log('you have no data');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const isImgLiked = () => {
     if (userSavedImg.find((obj) => obj.id === item.item.id)) {
@@ -49,13 +29,6 @@ export const RenderItem: React.FC<IRenderItem> = ({ item, renderHeight }) => {
         },
       ]);
   };
-
-  useEffect(() => {
-    getAsyncStorageData();
-  }, []);
-  useEffect(() => {
-    setAsyncStorageData();
-  }, [userSavedImg]);
 
   return (
     <View>
@@ -86,7 +59,10 @@ export const RenderItem: React.FC<IRenderItem> = ({ item, renderHeight }) => {
             globalStyles.pin,
             renderHeight ? { height: renderHeight } : null,
           ]}
-          source={{ uri: item.item.urls.regular }}
+          source={{ uri: item.item.urls.small ?? item.item.urls.regular }}
+          contentFit="cover"
+          cachePolicy="memory-disk"
+          transition={150}
         />
         {!!item.item.alt_description && (
           <Text style={globalStyles.alt_description} numberOfLines={2}>
@@ -97,3 +73,5 @@ export const RenderItem: React.FC<IRenderItem> = ({ item, renderHeight }) => {
     </View>
   );
 };
+
+export const RenderItem = React.memo(RenderItemComponent);

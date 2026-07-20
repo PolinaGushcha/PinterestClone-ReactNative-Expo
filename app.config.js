@@ -10,6 +10,7 @@ export default {
     userInterfaceStyle: "light",
     plugins: [
       "expo-status-bar",
+      "expo-image",
       [
         "expo-splash-screen",
         {

@@ -1,22 +1,23 @@
-require("dotenv").config();
+require('dotenv').config();
 
 export default {
   expo: {
-    name: "pinterest-app",
-    slug: "pinterest-app",
-    version: "1.0.0",
-    orientation: "portrait",
-    icon: "./assets/icon.png",
-    userInterfaceStyle: "light",
+    name: 'pinterest-app',
+    slug: 'pinterest-app',
+    version: '1.0.0',
+    orientation: 'portrait',
+    icon: './assets/icon.png',
+    userInterfaceStyle: 'light',
     plugins: [
-      "expo-status-bar",
-      "expo-image",
+      'expo-font',
+      'expo-status-bar',
+      'expo-image',
       [
-        "expo-splash-screen",
+        'expo-splash-screen',
         {
-          image: "./assets/splash.png",
-          resizeMode: "contain",
-          backgroundColor: "#ffffff",
+          image: './assets/splash.png',
+          resizeMode: 'contain',
+          backgroundColor: '#ffffff',
         },
       ],
     ],
@@ -25,26 +26,26 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff",
+        foregroundImage: './assets/adaptive-icon.png',
+        backgroundColor: '#ffffff',
       },
-      package: "com.anonymous.myapp",
+      package: 'com.anonymous.myapp',
     },
     web: {
-      favicon: "./assets/favicon.png",
+      favicon: './assets/favicon.png',
     },
     extra: {
-      unsplashApiKey: process.env.UNSPLASH_API_KEY,
+      unsplashApiKey: process.env.EXPO_PUBLIC_UNSPLASH_API_KEY,
       eas: {
-        projectId: "428d79df-a970-499a-b4d7-beb83aac41bb",
+        projectId: '428d79df-a970-499a-b4d7-beb83aac41bb',
       },
     },
-    owner: "palinahushcha",
+    owner: 'palinahushcha',
     runtimeVersion: {
-      policy: "appVersion",
+      policy: 'appVersion',
     },
     updates: {
-      url: "https://u.expo.dev/428d79df-a970-499a-b4d7-beb83aac41bb",
+      url: 'https://u.expo.dev/428d79df-a970-499a-b4d7-beb83aac41bb',
     },
   },
 };

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Pressable, Text, Modal, View } from 'react-native';
 import { Image } from 'expo-image';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { globalStyles } from '../../styles';
+import { spacing } from '../../styles/theme';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { ModalImgInfo } from '../../pages/modal';
 import { useDataContext } from '../../contexts/DataContextProvider';
@@ -10,6 +12,7 @@ import { IRenderItem } from '../../types';
 const RenderItemComponent: React.FC<IRenderItem> = ({ item, renderHeight }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { userSavedImg, setUserSavedImg } = useDataContext();
+  const insets = useSafeAreaInsets();
 
   const isImgLiked = () => {
     if (userSavedImg.find((obj) => obj.id === item.item.id)) {
@@ -38,7 +41,7 @@ const RenderItemComponent: React.FC<IRenderItem> = ({ item, renderHeight }) => {
           size={25}
           color="white"
           onPress={() => setIsModalOpen(false)}
-          style={globalStyles.closecircleo}
+          style={[globalStyles.closecircleo, { top: spacing.xl + insets.top }]}
         />
         <ModalImgInfo item={item} />
       </Modal>

@@ -4,7 +4,7 @@ export default {
   expo: {
     name: 'pinterest-app',
     slug: 'pinterest-app',
-    version: '1.0.0',
+    version: '1.0.1',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
@@ -15,7 +15,7 @@ export default {
       [
         'expo-splash-screen',
         {
-          image: './assets/splash.png',
+          image: './assets/icon.png',
           resizeMode: 'contain',
           backgroundColor: '#ffffff',
         },
@@ -23,11 +23,12 @@ export default {
     ],
     ios: {
       supportsTablet: true,
+      bundleIdentifier: 'com.anonymous.myapp',
     },
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
-        backgroundColor: '#ffffff',
+        backgroundImage: './assets/adaptive-icon-background.png',
       },
       package: 'com.anonymous.myapp',
     },

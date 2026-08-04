@@ -20,15 +20,19 @@ const SearchContextProvider = ({ children }: IContextProps) => {
   const [images, setImages] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setCurrentPage(1);
+    setIsLoading(true);
     if (userSearchQuery == '') {
-      fetchData().then((data) => setImages(dedupeById(data)));
+      fetchData()
+        .then((data) => setImages(dedupeById(data)))
+        .finally(() => setIsLoading(false));
     } else {
-      fetchSearchQueryData(userSearchQuery, 1).then((data) =>
-        setImages(dedupeById(data.results)),
-      );
+      fetchSearchQueryData(userSearchQuery, 1)
+        .then((data) => setImages(dedupeById(data.results)))
+        .finally(() => setIsLoading(false));
     }
   }, [userSearchQuery]);
   useEffect(() => {
@@ -55,6 +59,7 @@ const SearchContextProvider = ({ children }: IContextProps) => {
     currentPage: currentPage,
     setCurrentPage: setCurrentPage,
     isLoadingMore: isLoadingMore,
+    isLoading: isLoading,
   };
 
   return (

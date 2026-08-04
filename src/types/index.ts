@@ -27,6 +27,7 @@ export interface ISearchContextInterface {
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   isLoadingMore: boolean;
+  isLoading: boolean;
 }
 
 export interface IRenderItem {

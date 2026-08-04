@@ -9,7 +9,8 @@ import { useSearchContext } from '../../contexts/SearchContextProvider';
 import { getPinHeight } from '../../utils/masonry';
 
 export const PinterestLayout: React.FC = () => {
-  const { setCurrentPage, images, userSearchQuery, isLoadingMore } = useSearchContext();
+  const { setCurrentPage, images, userSearchQuery, isLoadingMore, isLoading } =
+    useSearchContext();
   const listRef = useRef<FlashListRef<any>>(null);
 
   useEffect(() => {
@@ -29,6 +30,15 @@ export const PinterestLayout: React.FC = () => {
 
   const keyExtractor = useCallback((item: any) => item.id, []);
 
+  if (isLoading && images.length === 0) {
+    return (
+      <View style={globalStyles.pinterestLayout_container}>
+        <FilterItem />
+        <Loading />
+      </View>
+    );
+  }
+
   return (
     <View style={globalStyles.pinterestLayout_container}>
       <FilterItem />
@@ -44,7 +54,7 @@ export const PinterestLayout: React.FC = () => {
         optimizeItemArrangement
         onEndReached={isLoadingMore ? undefined : loadingMoreItem}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={Loading}
+        ListFooterComponent={isLoadingMore ? Loading : undefined}
       />
     </View>
   );

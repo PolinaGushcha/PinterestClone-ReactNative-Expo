@@ -41,7 +41,7 @@ export const globalStyles = StyleSheet.create({
     position: 'relative',
     marginBottom: spacing.md,
     marginHorizontal: spacing.xs,
-    backgroundColor: colors.surface,
+    backgroundColor: 'transparent',
     overflow: 'hidden',
   },
   like: {
